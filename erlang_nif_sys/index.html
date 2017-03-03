@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `erlang_nif_sys` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, erlang_nif_sys">
+
+    <title>erlang_nif_sys - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'erlang_nif_sys', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>erlang_nif_sys</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/erlang_nif_sys/lib.rs.html#1-138' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Low level Rust bindings to the <a href="http://www.erlang.org/doc/man/erl_nif.html">Erlang NIF API</a>.</p>
+
+<h1 id='nif-crate' class='section-header'><a href='#nif-crate'>NIF Crate</a></h1>
+<p>A NIF module is built by creating a new crate that uses <code>erlang_nif-sys</code> as a dependency.
+(more)</p>
+
+<h1 id='nif-functions' class='section-header'><a href='#nif-functions'>NIF Functions</a></h1>
+<p>All NIF functions must have the following signature:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>erlang_nif_sys</span>;
+<span class='kw'>use</span> <span class='ident'>erlang_nif_sys</span>::<span class='kw-2'>*</span>;
+<span class='kw'>fn</span> <span class='ident'>my_nif</span>(<span class='ident'>env</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ErlNifEnv</span>,
+          <span class='ident'>argc</span>: <span class='ident'>c_int</span>,
+          <span class='ident'>args</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>ERL_NIF_TERM</span>) <span class='op'>-&gt;</span> <span class='ident'>ERL_NIF_TERM</span> {
+    <span class='comment'>// ...</span>
+}
+</pre>
+
+<h1 id='nif-module-initialization' class='section-header'><a href='#nif-module-initialization'>NIF Module Initialization</a></h1>
+<h2 id='for-the-impatient' class='section-header'><a href='#for-the-impatient'>For the Impatient</a></h2>
+<pre class='rust rust-example-rendered'>
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>erlang_nif_sys</span>;
+<span class='kw'>use</span> <span class='ident'>erlang_nif_sys</span>::<span class='kw-2'>*</span>;
+
+<span class='macro'>nif_init</span><span class='macro'>!</span>(<span class='string'>&quot;my_nif_module&quot;</span>,[
+        (<span class='string'>&quot;my_nif_fun1&quot;</span>, <span class='number'>1</span>, <span class='ident'>my_nif_fun1</span>),
+        (<span class='string'>&quot;my_dirty_fun2&quot;</span>, <span class='number'>1</span>, <span class='ident'>my_dirty_fun2</span>, <span class='ident'>ERL_NIF_DIRTY_JOB_CPU_BOUND</span>)
+    ],
+    {<span class='ident'>load</span>: <span class='ident'>my_load</span>}
+);</pre>
+
+<h2 id='details' class='section-header'><a href='#details'>Details</a></h2>
+<p>The <code>erlang_nif-sys</code> analog of <a href="http://www.erlang.org/doc/man/erl_nif_init.html"><code>ERL_NIF_INIT()</code></a> is <code>nif_init!</code> which has the following form:</p>
+
+<p><code>nif_init!(module_name, [nif_funcs], {options})</code></p>
+
+<p><code>module_name</code> must be a string literal, for example <code>&quot;mynifmodule&quot;</code>.</p>
+
+<p><code>nif_funcs</code> declares all the exported NIF functions for this module.  Each entry is declared as</p>
+
+<p><code>(name, arity, function, flags)</code></p>
+
+<p><code>name</code> is a string literal indicating the name of the function as seen from Erlang code.
+<code>arity</code> is an integer indicating how many parameter this function takes as seen from Erlang code.
+<code>function</code> is the Rust implentation of the NIF and must be of the form
+<code>Fn(env: *mut ErlNifEnv, argc: c_int, args: *const ERL_NIF_TERM) -&gt; ERL_NIF_TERM</code>.  This is usually a plain
+Rust function, but closures are permitted.
+<code>flags</code> is optional and allows you to specify if this NIF is to run on a dirty scheduler.  See <a href="http://www.erlang.org/doc/man/erl_nif.html#dirty_nifs">dirty NIFs</a>
+in the Erlang docs.</p>
+
+<p>The <code>options</code> are the NIF module intialization functions <a href="http://www.erlang.org/doc/man/erl_nif.html#load"><code>load</code></a>, <a href="http://www.erlang.org/doc/man/erl_nif.html#reload"><code>reload</code></a>,
+<a href="http://www.erlang.org/doc/man/erl_nif.html#upgrade"><code>upgrade</code></a>, and <a href="http://www.erlang.org/doc/man/erl_nif.html#unload"><code>unload</code></a>.
+Each is optional and is specified in struct-init style if present.  If no options are needed,
+the curly braces may be elided.  Stub implementation of all these functions looks something like:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>erlang_nif_sys</span>;
+<span class='kw'>use</span> <span class='ident'>erlang_nif_sys</span>::<span class='kw-2'>*</span>;
+
+<span class='macro'>nif_init</span><span class='macro'>!</span>(<span class='string'>&quot;mymod&quot;</span>, [], {<span class='ident'>load</span>: <span class='ident'>load</span>, <span class='ident'>reload</span>: <span class='ident'>reload</span>, <span class='ident'>upgrade</span>: <span class='ident'>upgrade</span>, <span class='ident'>unload</span>: <span class='ident'>unload</span>});
+
+<span class='kw'>fn</span> <span class='ident'>load</span>(<span class='ident'>env</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ErlNifEnv</span>,
+        <span class='ident'>priv_data</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
+        <span class='ident'>load_info</span>: <span class='ident'>ERL_NIF_TERM</span>)<span class='op'>-&gt;</span> <span class='ident'>c_int</span> { <span class='number'>0</span> }
+
+<span class='kw'>fn</span> <span class='ident'>reload</span>(<span class='ident'>env</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ErlNifEnv</span>,
+          <span class='ident'>priv_data</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
+          <span class='ident'>load_info</span>: <span class='ident'>ERL_NIF_TERM</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span> { <span class='number'>0</span> }
+
+<span class='kw'>fn</span> <span class='ident'>upgrade</span>(<span class='ident'>env</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ErlNifEnv</span>,
+           <span class='ident'>priv_data</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
+           <span class='ident'>old_priv_data</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
+                      <span class='ident'>load_info</span>: <span class='ident'>ERL_NIF_TERM</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span> { <span class='number'>0</span> }
+
+<span class='kw'>fn</span> <span class='ident'>unload</span>(<span class='ident'>env</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ErlNifEnv</span>,
+          <span class='ident'>priv_data</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>) {}
+</pre>
+
+<h1 id='invoking-nif-api' class='section-header'><a href='#invoking-nif-api'>Invoking NIF API</a></h1>
+<p>As with any Rust FFI call, NIF API calls must be wrapped in <code>unsafe</code> blocks.
+Below is an example of invoking NIF APIs along with an approach for dealing with
+the the <code>args</code> parameter.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>erlang_nif_sys</span>;
+<span class='kw'>use</span> <span class='ident'>erlang_nif_sys</span>::<span class='kw-2'>*</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
+<span class='kw'>fn</span> <span class='ident'>native_add</span>(<span class='ident'>env</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ErlNifEnv</span>,
+              <span class='ident'>argc</span>: <span class='ident'>c_int</span>,
+              <span class='ident'>args</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>ERL_NIF_TERM</span>) <span class='op'>-&gt;</span> <span class='ident'>ERL_NIF_TERM</span> {
+    <span class='kw'>unsafe</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>b</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>uninitialized</span>();
+        <span class='kw'>if</span> <span class='ident'>argc</span> <span class='op'>==</span> <span class='number'>2</span> <span class='op'>&amp;&amp;</span>
+           <span class='number'>0</span> <span class='op'>!=</span> <span class='ident'>enif_get_int</span>(<span class='ident'>env</span>, <span class='kw-2'>*</span><span class='ident'>args</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>a</span>) <span class='op'>&amp;&amp;</span>
+           <span class='number'>0</span> <span class='op'>!=</span> <span class='ident'>enif_get_int</span>(<span class='ident'>env</span>, <span class='kw-2'>*</span><span class='ident'>args</span>.<span class='ident'>offset</span>(<span class='number'>1</span>), <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>b</span>) {
+            <span class='ident'>enif_make_int</span>(<span class='ident'>env</span>, <span class='ident'>a</span><span class='op'>+</span><span class='ident'>b</span>)
+         }
+         <span class='kw'>else</span> {
+            <span class='ident'>enif_make_badarg</span>(<span class='ident'>env</span>)
+         }
+    }
+}</pre>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use <a class='mod' href='../erlang_nif_sys/erlang_nif_sys_api/index.html' title='mod erlang_nif_sys::erlang_nif_sys_api'>erlang_nif_sys_api</a>::*;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='erlang_nif_sys_api/index.html'
+                                  title='mod erlang_nif_sys::erlang_nif_sys_api'>erlang_nif_sys_api</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.enif_fprintf.html'
+                                  title='macro erlang_nif_sys::enif_fprintf'>enif_fprintf</a></td>
+                           <td class='docblock-short'>
+                                <p>See <a href="http://www.erlang.org/doc/man/erl_nif.html#enif_fprintf">enif_fprintf</a> in the Erlang docs.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.enif_make_list.html'
+                                  title='macro erlang_nif_sys::enif_make_list'>enif_make_list</a></td>
+                           <td class='docblock-short'>
+                                <p>See <a href="http://www.erlang.org/doc/man/erl_nif.html#enif_make_list">enif_make_list</a> in the Erlang docs.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.enif_make_tuple.html'
+                                  title='macro erlang_nif_sys::enif_make_tuple'>enif_make_tuple</a></td>
+                           <td class='docblock-short'>
+                                <p>See <a href="http://www.erlang.org/doc/man/erl_nif.html#enif_make_tuple">enif_make_tuple</a> in the Erlang docs.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.enif_snprintf.html'
+                                  title='macro erlang_nif_sys::enif_snprintf'>enif_snprintf</a></td>
+                           <td class='docblock-short'>
+                                <p>See <a href="http://www.erlang.org/doc/man/erl_nif.html#enif_snprintf">enif_snprintf</a> in the Erlang docs.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.nif.html'
+                                  title='macro erlang_nif_sys::nif'>nif</a></td>
+                           <td class='docblock-short'>
+                                <p>Create ErlNifFunc structure.  Use inside <code>nif_init!</code>. (Deprecated)</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.nif_init.html'
+                                  title='macro erlang_nif_sys::nif_init'>nif_init</a></td>
+                           <td class='docblock-short'>
+                                <p>Implement exported module init function needed by the Erlang runtime.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.platform_nif_init.html'
+                                  title='macro erlang_nif_sys::platform_nif_init'>platform_nif_init</a></td>
+                           <td class='docblock-short'>
+                                <p>Platform specific NIF module initialization.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.slice_args.html'
+                                  title='macro erlang_nif_sys::slice_args'>slice_args</a></td>
+                           <td class='docblock-short'>
+                                <p>Wrapper to deliver NIF args as Rust slice.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "erlang_nif_sys";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

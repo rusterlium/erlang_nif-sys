@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ErlNifFunc` struct in crate `erlang_nif_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ErlNifFunc">
+
+    <title>erlang_nif_sys::erlang_nif_sys_api::ErlNifFunc - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>erlang_nif_sys</a>::<wbr><a href='index.html'>erlang_nif_sys_api</a></p><script>window.sidebarCurrent = {name: 'ErlNifFunc', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>erlang_nif_sys</a>::<wbr><a href='index.html'>erlang_nif_sys_api</a>::<wbr><a class='struct' href=''>ErlNifFunc</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/erlang_nif_sys/erlang_nif_sys_api.rs.html#41-46' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct ErlNifFunc {
+    pub name: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*const </a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>,
+    pub arity: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_uint.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_uint'>c_uint</a>,
+    pub function: unsafe extern fn(_: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='struct' href='../../erlang_nif_sys/erlang_nif_sys_api/struct.ErlNifEnv.html' title='struct erlang_nif_sys::erlang_nif_sys_api::ErlNifEnv'>ErlNifEnv</a>, _: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>, _: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*const </a><a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.ERL_NIF_TERM.html' title='type erlang_nif_sys::erlang_nif_sys_api::ERL_NIF_TERM'>ERL_NIF_TERM</a>) -&gt; <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.ERL_NIF_TERM.html' title='type erlang_nif_sys::erlang_nif_sys_api::ERL_NIF_TERM'>ERL_NIF_TERM</a>,
+    pub flags: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_uint.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_uint'>c_uint</a>,
+}</pre><div class='docblock'><p>See <a href="http://www.erlang.org/doc/man/erl_nif.html#ErlNifFunc">ErlNifFunc</a> in the Erlang docs.</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.name' class='structfield'>
+                           <span id='name.v' class='invisible'>
+                           <code>name: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*const </a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a></code>
+                           </span></span><span id='structfield.arity' class='structfield'>
+                           <span id='arity.v' class='invisible'>
+                           <code>arity: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_uint.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_uint'>c_uint</a></code>
+                           </span></span><span id='structfield.function' class='structfield'>
+                           <span id='function.v' class='invisible'>
+                           <code>function: unsafe extern fn(_: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='struct' href='../../erlang_nif_sys/erlang_nif_sys_api/struct.ErlNifEnv.html' title='struct erlang_nif_sys::erlang_nif_sys_api::ErlNifEnv'>ErlNifEnv</a>, _: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>, _: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*const </a><a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.ERL_NIF_TERM.html' title='type erlang_nif_sys::erlang_nif_sys_api::ERL_NIF_TERM'>ERL_NIF_TERM</a>) -&gt; <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.ERL_NIF_TERM.html' title='type erlang_nif_sys::erlang_nif_sys_api::ERL_NIF_TERM'>ERL_NIF_TERM</a></code>
+                           </span></span><span id='structfield.flags' class='structfield'>
+                           <span id='flags.v' class='invisible'>
+                           <code>flags: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_uint.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_uint'>c_uint</a></code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "erlang_nif_sys";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

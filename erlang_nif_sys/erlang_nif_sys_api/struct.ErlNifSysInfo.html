@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ErlNifSysInfo` struct in crate `erlang_nif_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ErlNifSysInfo">
+
+    <title>erlang_nif_sys::erlang_nif_sys_api::ErlNifSysInfo - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>erlang_nif_sys</a>::<wbr><a href='index.html'>erlang_nif_sys_api</a></p><script>window.sidebarCurrent = {name: 'ErlNifSysInfo', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>erlang_nif_sys</a>::<wbr><a href='index.html'>erlang_nif_sys_api</a>::<wbr><a class='struct' href=''>ErlNifSysInfo</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/erlang_nif_sys/erlang_nif_sys_api.rs.html#119-131' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[repr(C)]
+</div>pub struct ErlNifSysInfo {
+    pub driver_major_version: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>,
+    pub driver_minor_version: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>,
+    pub erts_version: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_char.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_char'>c_char</a>,
+    pub otp_release: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_char.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_char'>c_char</a>,
+    pub thread_support: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>,
+    pub smp_support: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>,
+    pub async_threads: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>,
+    pub scheduler_threads: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>,
+    pub nif_major_version: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>,
+    pub nif_minor_version: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>,
+    pub dirty_scheduler_support: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a>,
+}</pre><div class='docblock'><p>See <a href="http://www.erlang.org/doc/man/erl_nif.html#ErlNifSysInfo">ErlNifSysInfo</a> in the Erlang docs.</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.driver_major_version' class='structfield'>
+                           <span id='driver_major_version.v' class='invisible'>
+                           <code>driver_major_version: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a></code>
+                           </span></span><span id='structfield.driver_minor_version' class='structfield'>
+                           <span id='driver_minor_version.v' class='invisible'>
+                           <code>driver_minor_version: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a></code>
+                           </span></span><span id='structfield.erts_version' class='structfield'>
+                           <span id='erts_version.v' class='invisible'>
+                           <code>erts_version: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_char.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_char'>c_char</a></code>
+                           </span></span><span id='structfield.otp_release' class='structfield'>
+                           <span id='otp_release.v' class='invisible'>
+                           <code>otp_release: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut </a><a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_char.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_char'>c_char</a></code>
+                           </span></span><span id='structfield.thread_support' class='structfield'>
+                           <span id='thread_support.v' class='invisible'>
+                           <code>thread_support: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a></code>
+                           </span></span><span id='structfield.smp_support' class='structfield'>
+                           <span id='smp_support.v' class='invisible'>
+                           <code>smp_support: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a></code>
+                           </span></span><span id='structfield.async_threads' class='structfield'>
+                           <span id='async_threads.v' class='invisible'>
+                           <code>async_threads: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a></code>
+                           </span></span><span id='structfield.scheduler_threads' class='structfield'>
+                           <span id='scheduler_threads.v' class='invisible'>
+                           <code>scheduler_threads: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a></code>
+                           </span></span><span id='structfield.nif_major_version' class='structfield'>
+                           <span id='nif_major_version.v' class='invisible'>
+                           <code>nif_major_version: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a></code>
+                           </span></span><span id='structfield.nif_minor_version' class='structfield'>
+                           <span id='nif_minor_version.v' class='invisible'>
+                           <code>nif_minor_version: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a></code>
+                           </span></span><span id='structfield.dirty_scheduler_support' class='structfield'>
+                           <span id='dirty_scheduler_support.v' class='invisible'>
+                           <code>dirty_scheduler_support: <a class='type' href='../../erlang_nif_sys/erlang_nif_sys_api/type.c_int.html' title='type erlang_nif_sys::erlang_nif_sys_api::c_int'>c_int</a></code>
+                           </span></span></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "erlang_nif_sys";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
