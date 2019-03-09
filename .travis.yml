@@ -7,7 +7,7 @@ sudo: required
 script: cargo test
 
 before_install:
-  - curl https://sh.rustup.rs -sSf | sh
+  - curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 before_script:
   - kerl list installations
