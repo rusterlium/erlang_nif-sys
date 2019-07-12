@@ -33,6 +33,9 @@ version_opts("2.13") -> [{major,2}, {minor,13}, exception, getenv, time,   % erl
 version_opts("2.14") -> [{major,2}, {minor,14}, exception, getenv, time,   % erlang 21.0
                         dirty_scheduler_opt, nif_2_11, nif_2_12, nif_2_13,
                         nif_2_14];
+version_opts("2.15") -> [{major,2}, {minor,15}, exception, getenv, time,   % erlang 21.0
+                        dirty_scheduler_opt, nif_2_11, nif_2_12, nif_2_13,
+                        nif_2_14, nif_2_15];
 version_opts(_) ->
     io:format("Unsupported Erlang version.\n\nIs the erlang_nif-sys version up to date in the Cargo.toml?\nDoes 'cargo update' fix it?\nIf not please report at https://github.com/goertzenator/erlang_nif-sys.\n"),
     halt(1).
@@ -228,7 +231,6 @@ api_list(Opts) -> [
     {"ERL_NIF_TERM", "enif_schedule_nif", "env: *mut ErlNifEnv, fun_name: *const c_uchar, flags:c_int, fp: unsafe extern \"C\" fn(env: *mut ErlNifEnv, argc:c_int, argv:*const ERL_NIF_TERM) -> ERL_NIF_TERM, argc:c_int, argv:*const ERL_NIF_TERM"}
     ] ++
 
-
     case proplists:get_bool(exception, Opts) of
         true -> [
             {"c_int", "enif_has_pending_exception", "env: *mut ErlNifEnv, reason: *mut ERL_NIF_TERM"},
@@ -237,15 +239,12 @@ api_list(Opts) -> [
         false -> []
     end ++
 
-
-
     case proplists:get_bool(getenv, Opts) of
         true -> [
             {"c_int", "enif_getenv", "key: *const c_uchar, value: *mut c_uchar, value_size: *mut size_t"}
         ];
         false -> []
     end ++
-
 
     case proplists:get_bool(time, Opts) of
         true -> [
@@ -256,12 +255,10 @@ api_list(Opts) -> [
         false -> []
     end ++
 
-
     case proplists:get_bool(dirty_schedulers, Opts) of
         true -> [{"c_int", "enif_is_on_dirty_scheduler", "env: *mut ErlNifEnv"}  ];
         false -> []
     end ++
-
 
     case proplists:get_bool(nif_2_11, Opts) of
         true -> [
@@ -321,6 +318,7 @@ api_list(Opts) -> [
         ];
         false -> []
     end ++
+
     case proplists:get_bool(nif_2_14, Opts) of
         true -> [
             %% Skip iovec and synchronization APIs for now (perhaps forever).
@@ -345,6 +343,26 @@ api_list(Opts) -> [
             {"", "dummy_enif_vsnprintf",            ""},
 
             {"c_int",  "enif_make_map_from_arrays", "env: *mut ErlNifEnv, keys: *const ERL_NIF_TERM, values: *const ERL_NIF_TERM, cnt: usize, map_out: *mut ERL_NIF_TERM"}
+        ];
+        false -> []
+    end ++
+
+    case proplists:get_bool(nif_2_15, Opts) of
+        true -> [
+%%          ERL_NIF_API_FUNC_DECL(int,enif_select_x,(ErlNifEnv* env, ErlNifEvent e, enum ErlNifSelectFlags flags, void* obj, const ErlNifPid* pid, ERL_NIF_TERM msg, ErlNifEnv* msg_env));
+            {"int",  "enif_select_x", "env: *mut ErlNifEnv, e: ErlNifEvent, flags: ErlNifSelectFlags, obj: *const c_void, pid: *const ErlNifPid, msg: ERL_NIF_TERM, msg_env: *mut ErlNifEnv"},
+
+%%          ERL_NIF_API_FUNC_DECL(ERL_NIF_TERM,enif_make_monitor_term,(ErlNifEnv* env, const ErlNifMonitor*));
+            {"ERL_NIF_TERM", "enif_make_monitor_term", "env: *mut ErlNifEnv, monitor: *const ErlNifMonitor"},
+
+%%          ERL_NIF_API_FUNC_DECL(void,enif_set_pid_undefined,(ErlNifPid* pid));
+            {"void",  "enif_set_pid_undefined", "pid: *mut ErlNifPid"},
+
+%%          ERL_NIF_API_FUNC_DECL(int,enif_is_pid_undefined,(const ErlNifPid* pid));
+            {"int",  "enif_is_pid_undefined", "pid: *const ErlNifPid"},
+
+%%          ERL_NIF_API_FUNC_DECL(ErlNifTermType,enif_term_type,(ErlNifEnv* env, ERL_NIF_TERM term));
+            {"ErlNifTermType",  "enif_term_type", "env: *mut ErlNifEnv, term: ERL_NIF_TERM"}
         ];
         false -> []
     end.

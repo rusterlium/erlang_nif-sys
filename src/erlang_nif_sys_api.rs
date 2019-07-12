@@ -139,6 +139,32 @@ pub enum ErlNifResourceFlags {
     ERL_NIF_RT_TAKEOVER = 2,
 }
 
+
+/// See [ErlNifResourceFlags](http://www.erlang.org/doc/man/erl_nif.html#ErlNifTermType) in the Erlang docs.
+#[derive(Debug, Copy, Clone)]
+#[repr(C)]
+pub enum ErlNifTermType {
+    ERL_NIF_TERM_TYPE_ATOM = 1,
+    ERL_NIF_TERM_TYPE_BITSTRING = 2,
+    ERL_NIF_TERM_TYPE_FLOAT = 3,
+    ERL_NIF_TERM_TYPE_FUN = 4,
+    ERL_NIF_TERM_TYPE_INTEGER = 5,
+    ERL_NIF_TERM_TYPE_LIST = 6,
+    ERL_NIF_TERM_TYPE_MAP = 7,
+    ERL_NIF_TERM_TYPE_PID = 8,
+    ERL_NIF_TERM_TYPE_PORT = 9,
+    ERL_NIF_TERM_TYPE_REFERENCE = 10,
+    ERL_NIF_TERM_TYPE_TUPLE = 11,
+
+    /// This is a dummy value intended to coax the compiler into warning about
+    /// unhandled values in a switch even if all the above values have been
+    /// handled. We can add new entries at any time so the user must always
+    /// have a default case.
+    ERL_NIF_TERM_TYPE__MISSING_DEFAULT_CASE__READ_THE_MANUAL = -1
+}
+
+
+
 /// See [ErlNifCharEncoding](http://www.erlang.org/doc/man/erl_nif.html#ErlNifCharEncoding) in the Erlang docs.
 #[derive(Debug, Copy, Clone)]
 #[repr(C)]
