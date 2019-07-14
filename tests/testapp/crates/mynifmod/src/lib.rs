@@ -13,6 +13,7 @@ nif_init!("mynifmod", [
     ("times2", 1, slice_args!(times2)),
     ("test_enif_make_pid", 0, test_enif_make_pid),
     ("test_enif_set_pid_undefined", 0, test_enif_set_pid_undefined),
+    ("test_enif_is_pid_undefined", 0, test_enif_is_pid_undefined),
     ("rustmap", 0, rustmap),
     ("rustmap_dtor_count", 0, rustmap_dtor_count),
     ("to_str", 1, slice_args!(to_str)),
@@ -57,6 +58,13 @@ fn test_enif_set_pid_undefined() {
         let mut pid: ErlNifPid = unsafe { mem::MaybeUninit::uninit().assume_init() };
         let pid_undefined = Some(enif_set_pid_undefined(&mut pid));
         assert!(pid_undefined.is_none());
+    }
+}
+
+fn test_enif_is_pid_undefined() {
+    unsafe  {
+        let mut pid: ErlNifPid = unsafe { mem::MaybeUninit::uninit().assume_init() };
+        assert_eq!(1, enif_is_pid_undefined(&pid));
     }
 }
 

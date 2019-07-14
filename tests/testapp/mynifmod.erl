@@ -30,6 +30,7 @@ simple_test_() -> [
         ?_assertEqual(6, times2(3)),
         ?_assertEqual(self(), test_enif_make_pid()),
         ? assertEqual(true, test_enif_set_pid_undefined()),
+        ? assertEqual(true, test_enif_id_pid_undefined()),
         fun() -> rustmap() end,
         ?_assertEqual(11, exercise_dtor(10)),
         ?_assertEqual("123", to_str(123)),
@@ -46,6 +47,7 @@ simple_test_() -> [
 times2(_X)           -> exit(nif_library_not_loaded).
 test_enif_make_pid() -> exit(nif_library_not_loaded).
 test_enif_set_pid_undefined() -> exit(nif_library_not_loaded).
+test_enif_id_pid_undefined() -> exit(nif_library_not_loaded).
 rustmap()            -> exit(nif_library_not_loaded).
 rustmap_dtor_count() -> exit(nif_library_not_loaded).
 to_str(_X)           -> exit(nif_library_not_loaded).
