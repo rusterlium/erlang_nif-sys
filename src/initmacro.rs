@@ -1,4 +1,3 @@
-
 /// Implement exported module init function needed by the Erlang runtime.
 ///
 /// See [the module level documentation](index.html) for usage of `nif_init!`.
@@ -69,8 +68,8 @@ macro_rules! platform_nif_init {
 /// fn native_add(env: *mut ErlNifEnv,
 ///               args: &[ERL_NIF_TERM]) -> ERL_NIF_TERM {
 ///     unsafe {
-///         let mut a: c_int = mem::uninitialized();
-///         let mut b: c_int = mem::uninitialized();
+///         let mut a: c_int = mem::MaybeUninit::uninit().assume_init();
+///         let mut b: c_int = mem::MaybeUninit::uninit().assume_init();
 ///         if args.len() == 2 &&
 ///            0 != enif_get_int(env, args[0], &mut a) &&
 ///            0 != enif_get_int(env, args[1], &mut b) {

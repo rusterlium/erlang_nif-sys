@@ -163,8 +163,6 @@ pub enum ErlNifTermType {
     ERL_NIF_TERM_TYPE__MISSING_DEFAULT_CASE__READ_THE_MANUAL = -1
 }
 
-
-
 /// See [ErlNifCharEncoding](http://www.erlang.org/doc/man/erl_nif.html#ErlNifCharEncoding) in the Erlang docs.
 #[derive(Debug, Copy, Clone)]
 #[repr(C)]
@@ -301,5 +299,3 @@ include!(concat!(env!("OUT_DIR"), "/nif_api.snippet"));
 //     pub fn enif_is_atom(arg1: *mut ErlNifEnv, term: ERL_NIF_TERM) -> c_int;
 //     pub fn enif_is_binary(arg1: *mut ErlNifEnv, term: ERL_NIF_TERM) -> c_int;
 // ...
-
-

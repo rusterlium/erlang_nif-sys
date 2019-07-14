@@ -23,7 +23,7 @@ nif_init!("mynifmod", [
     {load: mynifmod_load});
 
 unsafe fn mynifmod_load(env: *mut ErlNifEnv, _priv_data: *mut *mut c_void, _load_info: ERL_NIF_TERM) -> c_int {
-    let mut tried: ErlNifResourceFlags = mem::uninitialized();
+    let mut tried: ErlNifResourceFlags = mem::MaybeUninit::uninit().assume_init();
     DTOR_COUNTER = Some(AtomicIsize::new(0));
     RUSTMAP_TYPE = enif_open_resource_type(
         env,
@@ -37,7 +37,7 @@ unsafe fn mynifmod_load(env: *mut ErlNifEnv, _priv_data: *mut *mut c_void, _load
 
 fn times2(env: *mut ErlNifEnv, args: &[ERL_NIF_TERM]) -> ERL_NIF_TERM {
     unsafe {
-        let mut result: i32 = mem::uninitialized();
+        let mut result: i32 = mem::MaybeUninit::uninit().assume_init();
         if 1==args.len() && 0!=enif_get_int(env, args[0], &mut result) {
             enif_make_int(env, 2*result)
         }
@@ -48,16 +48,16 @@ fn times2(env: *mut ErlNifEnv, args: &[ERL_NIF_TERM]) -> ERL_NIF_TERM {
 }
 
 fn test_enif_make_pid(env: *mut ErlNifEnv, _: c_int, _: *const ERL_NIF_TERM) -> ERL_NIF_TERM {
-    let mut pid: ErlNifPid = unsafe { mem::uninitialized() };
+    let mut pid: ErlNifPid = unsafe { mem::MaybeUninit::uninit().assume_init() };
     unsafe { enif_self(env, &mut pid) };
     unsafe { enif_make_pid(env, &pid) }
 }
 
 fn test_enif_set_pid_undefined() {
     unsafe  {
-        let mut pid: ErlNifPid = unsafe { mem::uninitialized() };
-        let pid_undefined: None = enif_set_pid_undefined(&pid);
-        assert!(enif_pid_is_undefined(pid_undefined));
+        let mut pid: ErlNifPid = unsafe { mem::MaybeUninit::uninit().assume_init() };
+        let pid_undefined = Some(enif_set_pid_undefined(&mut pid));
+        assert!(pid_undefined.is_none());
     }
 }
 
@@ -123,7 +123,7 @@ unsafe fn make_map(env: *mut ErlNifEnv, args: &[ERL_NIF_TERM]) -> ERL_NIF_TERM {
         let values: Vec<_> = (1..=3)
             .map(|x| enif_make_int(env, x))
             .collect();
-        let mut map = mem::uninitialized();
+        let mut map = mem::MaybeUninit::uninit().assume_init();
         if 0!=enif_make_map_from_arrays(env, keys.as_ptr(), values.as_ptr(), keys.len(), &mut map) {
             map
         } else {

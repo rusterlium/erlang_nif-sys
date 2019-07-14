@@ -410,7 +410,7 @@ api_bindings_rust("win32", Entries) ->
       % The line below would be the "faithful" reproduction of the NIF Win API, but Rust
       % is currently not allowing statics to be uninitialized (1.3 beta).  Revisit this when
       % RFC911 is implemented (or some other mechanism)
-      %"static mut WinDynNifCallbacks:TWinDynNifCallbacks = unsafe{std::mem::uninitialized()};\n\n",
+      %"static mut WinDynNifCallbacks:TWinDynNifCallbacks = unsafe{std::mem::MaybeUninit::uninit().assume_init()};\n\n",
 
       % The work-around is to use Option.  The problem here is that we have to do an unwrap() for
       % each API call which is extra work.

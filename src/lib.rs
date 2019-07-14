@@ -110,8 +110,8 @@ fn native_add(env: *mut ErlNifEnv,
               argc: c_int,
               args: *const ERL_NIF_TERM) -> ERL_NIF_TERM {
     unsafe {
-        let mut a: c_int = mem::uninitialized();
-        let mut b: c_int = mem::uninitialized();
+        let mut a: c_int = mem::MaybeUninit();
+        let mut b: c_int = mem::MaybeUninit();
         if argc == 2 &&
            0 != enif_get_int(env, *args, &mut a) &&
            0 != enif_get_int(env, *args.offset(1), &mut b) {
