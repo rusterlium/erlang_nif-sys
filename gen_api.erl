@@ -350,16 +350,16 @@ api_list(Opts) -> [
     case proplists:get_bool(nif_2_15, Opts) of
         true -> [
 %%          ERL_NIF_API_FUNC_DECL(int,enif_select_x,(ErlNifEnv* env, ErlNifEvent e, enum ErlNifSelectFlags flags, void* obj, const ErlNifPid* pid, ERL_NIF_TERM msg, ErlNifEnv* msg_env));
-            {"int",  "enif_select_x", "env: *mut ErlNifEnv, e: ErlNifEvent, flags: ErlNifSelectFlags, obj: *const c_void, pid: *const ErlNifPid, msg: ERL_NIF_TERM, msg_env: *mut ErlNifEnv"},
+            {"c_int",  "enif_select_x", "env: *mut ErlNifEnv, e: ErlNifEvent, flags: ErlNifSelectFlags, obj: *const c_void, pid: *const ErlNifPid, msg: ERL_NIF_TERM, msg_env: *mut ErlNifEnv"},
 
 %%          ERL_NIF_API_FUNC_DECL(ERL_NIF_TERM,enif_make_monitor_term,(ErlNifEnv* env, const ErlNifMonitor*));
             {"ERL_NIF_TERM", "enif_make_monitor_term", "env: *mut ErlNifEnv, monitor: *const ErlNifMonitor"},
 
 %%          ERL_NIF_API_FUNC_DECL(void,enif_set_pid_undefined,(ErlNifPid* pid));
-            {"void",  "enif_set_pid_undefined", "pid: *mut ErlNifPid"},
+            {"c_void",  "enif_set_pid_undefined", "pid: *mut ErlNifPid"},
 
 %%          ERL_NIF_API_FUNC_DECL(int,enif_is_pid_undefined,(const ErlNifPid* pid));
-            {"int",  "enif_is_pid_undefined", "pid: *const ErlNifPid"},
+            {"c_int",  "enif_is_pid_undefined", "pid: *const ErlNifPid"},
 
 %%          ERL_NIF_API_FUNC_DECL(ErlNifTermType,enif_term_type,(ErlNifEnv* env, ERL_NIF_TERM term));
             {"ErlNifTermType",  "enif_term_type", "env: *mut ErlNifEnv, term: ERL_NIF_TERM"}
