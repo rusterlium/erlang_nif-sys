@@ -13,6 +13,7 @@ static mut DTOR_COUNTER: Option<AtomicIsize> = None;
 nif_init!("mynifmod", [
     ("times2", 1, slice_args!(times2)),
     ("test_enif_make_pid", 0, test_enif_make_pid),
+    ("test_enif_set_pid_undefined", 0, test_enif_set_pid_undefined),
     ("rustmap", 0, rustmap),
     ("rustmap_dtor_count", 0, rustmap_dtor_count),
     ("to_str", 1, slice_args!(to_str)),
@@ -50,6 +51,14 @@ fn test_enif_make_pid(env: *mut ErlNifEnv, _: c_int, _: *const ERL_NIF_TERM) -> 
     let mut pid: ErlNifPid = unsafe { mem::uninitialized() };
     unsafe { enif_self(env, &mut pid) };
     unsafe { enif_make_pid(env, &pid) }
+}
+
+fn test_enif_set_pid_undefined() {
+    unsafe  {
+        let mut pid: ErlNifPid = unsafe { mem::uninitialized() };
+        let pid_undefined: None = enif_set_pid_undefined(&pid);
+        assert!(enif_pid_is_undefined(pid_undefined));
+    }
 }
 
 use std::collections::HashMap;
