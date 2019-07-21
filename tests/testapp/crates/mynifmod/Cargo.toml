@@ -2,6 +2,7 @@
 name = "mynifmod"
 version = "0.1.0"
 authors = ["Daniel Goertzen <daniel.goertzen@gmail.com>"]
+edition = "2018"
 
 [lib]
 name = "mynifmod"

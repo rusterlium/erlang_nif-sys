@@ -11,8 +11,6 @@ A NIF module is built by creating a new crate that uses `erlang_nif-sys` as a de
 All NIF functions must have the following signature:
 
 ```
-#[macro_use]
-extern crate erlang_nif_sys;
 use erlang_nif_sys::*;
 # fn main(){} //0
 fn my_nif(env: *mut ErlNifEnv,
@@ -28,8 +26,6 @@ fn my_nif(env: *mut ErlNifEnv,
 
 ## For the Impatient
 ```
-#[macro_use]
-extern crate erlang_nif_sys;
 use erlang_nif_sys::*;
 
 nif_init!("my_nif_module",[
@@ -71,8 +67,6 @@ Each is optional and is specified in struct-init style if present.  If no option
 the curly braces may be elided.  Stub implementation of all these functions looks something like:
 
 ```
-#[macro_use]
-extern crate erlang_nif_sys;
 use erlang_nif_sys::*;
 
 nif_init!("mymod", [], {load: load, reload: reload, upgrade: upgrade, unload: unload});
@@ -134,7 +128,6 @@ fn native_add(env: *mut ErlNifEnv,
 #[cfg(windows)]
 extern crate unreachable;
 
-#[macro_use]
 mod initmacro;
 
 pub mod erlang_nif_sys_api;

@@ -1,6 +1,4 @@
 
-#[macro_use]
-extern crate erlang_nif_sys;
 use erlang_nif_sys::*;
 
 use std::{mem, ptr};

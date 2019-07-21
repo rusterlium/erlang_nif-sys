@@ -7,6 +7,7 @@ documentation = "https://docs.rs/erlang_nif-sys"
 repository = "https://github.com/goertzenator/erlang_nif-sys"
 license = "MIT/Apache-2.0"
 keywords = ["FFI", "Erlang", "NIF"]
+edition = "2018"
 
 build = "build.rs"
 
