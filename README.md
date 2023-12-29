@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.org/goertzenator/erlang_nif-sys.svg?branch=master)](https://travis-ci.org/goertzenator/erlang_nif-sys)
 [![Build status](https://ci.appveyor.com/api/projects/status/rssa03e29mxou4hv/branch/master?svg=true)](https://ci.appveyor.com/project/goertzenator/erlang-nif-sys/branch/master)
 
+# **This repo is no longer in use. This code is now maintained as part of the main [rustler](github.com/rusterlium/rustler) repo.**
+
 A crate for creating [Erlang NIF modules](http://www.erlang.org/doc/man/erl_nif.html) in Rust.  This crate exposes the raw C NIF API which can be used directly or as a foundation for higher layer interface crates.  Supported under Unix and Windows.
 
 See the [crate documention](https://docs.rs/erlang_nif-sys).
