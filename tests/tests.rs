@@ -54,15 +54,15 @@ fn copy_all<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Result<()> {
     // calculate how many path elements to chop off entry when forming to path
     let chop_cnt = from.as_ref().components().count() - 1;
     for entry in WalkDir::new(from).follow_links(false) {
-        let entry = try!(entry);
+        let entry = entry?;
         let filetype = entry.file_type();
         let compi = entry.path().components().dropping(chop_cnt);
         let to_path = to.as_ref().join(compi.as_path());
         //let to_path = to.as_ref().join(entry.path());
         if filetype.is_dir() {
-            try!(fs::create_dir_all(to_path));
+            fs::create_dir_all(to_path)?;
         } else if filetype.is_file() {
-            try!(fs::copy(entry.path(), to_path));
+            fs::copy(entry.path(), to_path)?;
         }
     }
     Ok(())

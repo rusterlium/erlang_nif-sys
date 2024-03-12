@@ -33,8 +33,15 @@ version_opts("2.13") -> [{major,2}, {minor,13}, exception, getenv, time,   % erl
 version_opts("2.14") -> [{major,2}, {minor,14}, exception, getenv, time,   % erlang 21.0
                         dirty_scheduler_opt, nif_2_11, nif_2_12, nif_2_13,
                         nif_2_14];
-version_opts(_) ->
-    io:format("Unsupported Erlang version.\n\nIs the erlang_nif-sys version up to date in the Cargo.toml?\nDoes 'cargo update' fix it?\nIf not please report at https://github.com/goertzenator/erlang_nif-sys.\n"),
+version_opts("2.15") -> [{major,2}, {minor,15}, exception, getenv, time,   % erlang 22.0
+                        dirty_scheduler_opt, nif_2_11, nif_2_12, nif_2_13,
+                        nif_2_14, nif_2_15];
+version_opts(Ver) ->
+    io:format(
+        "This OTP release uses the unsupported Erlang NIF version ~p.\n\n"
+        "Please report at https://github.com/rustlerium/rustler.\n",
+        [Ver]
+    ),
     halt(1).
 
 ulong_opts("4") -> [{ulongsize, 4}];
@@ -344,11 +351,20 @@ api_list(Opts) -> [
             {"", "dummy_enif_vfprintf",             ""},
             {"", "dummy_enif_vsnprintf",            ""},
 
-            {"c_int",  "enif_make_map_from_arrays", "env: *mut ErlNifEnv, keys: *const ERL_NIF_TERM, values: *const ERL_NIF_TERM, cnt: usize, map_out: *mut ERL_NIF_TERM"}
+            {"c_int", "enif_make_map_from_arrays", "env: *mut ErlNifEnv, keys: *const ERL_NIF_TERM, values: *const ERL_NIF_TERM, cnt: usize, map_out: *mut ERL_NIF_TERM"}
+        ];
+        false -> []
+    end ++
+    case proplists:get_bool(nif_2_15, Opts) of
+        true -> [
+            {"ErlNifTermType", "enif_term_type", "env: *mut ErlNifEnv, term: *const ERL_NIF_TERM"},
+
+            {"c_int", "enif_is_pid_undefined", "pid: *const ErlNifPid"},
+            {"", "enif_set_pid_undefined", "pid: *mut ErlNifPid"},
+            {"ERL_NIF_TERM", "enif_make_monitor_term", "env: *mut ErlNifEnv, mon: *const ErlNifMonitor"}
         ];
         false -> []
     end.
-
 
 
 main([UlongSizeT]) -> main([UlongSizeT,"."]);

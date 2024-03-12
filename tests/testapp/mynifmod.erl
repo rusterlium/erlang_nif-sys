@@ -21,6 +21,7 @@ find_library(CrateName, LibName) ->
 
 exercise_dtor(0) ->
     garbage_collect(), %% don't crash
+    timer:sleep(100), %% Sleep to give the dtors some time to run async
     rustmap_dtor_count();
 exercise_dtor(N) ->
     rustmap(),  %% create and discard a resource

@@ -257,7 +257,7 @@ mod initmacro_namespace_tests {
 
     // explicitly disable for this test:
     // use erlang_nif_sys_api::*;
-    use erlang_nif_sys_api;
+    use crate::erlang_nif_sys_api;
 
     use std;
     use std::ptr;
@@ -316,7 +316,7 @@ mod initmacro_namespace_tests {
 
 #[cfg(test)]
 mod initmacro_tests {
-    use erlang_nif_sys_api::*;
+    use crate::erlang_nif_sys_api::*;
     use std;
     use std::ptr;
     use std::slice;
